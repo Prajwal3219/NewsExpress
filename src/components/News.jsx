@@ -35,15 +35,15 @@ export class News extends Component {
       
     this.props.setProgress(10)
     this.setState({ loading: true });
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=83b844a486f54934aa2dbd2cc2ecb72c&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    const url = `https://gnews.io/api/v4/top-headlines?country=${this.props.country}&category=${this.props.category}&apikey=f76f3974a8d6e319c4a9c58c6f0eed60&page=${this.state.page}&max=${this.props.pageSize}`;
     let data = await fetch(url)
     this.props.setProgress(30)
     let parse = await (data.json())
     this.props.setProgress(60)
     console.log(parse)
     this.setState({
-      articles: parse.articles,
-      totalResults: parse.totalResults,
+      articles: parse.articles || [],
+      totalResults: parse.totalArticles || parse.totalResults || 0,
       loading: false
     })
     this.props.setProgress(100)
@@ -71,13 +71,13 @@ export class News extends Component {
 
   fetchMoreData = async() =>{
     this.setState({ loading: true, page: this.state.page + 1 });
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=83b844a486f54934aa2dbd2cc2ecb72c&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    const url = `https://gnews.io/api/v4/top-headlines?country=${this.props.country}&category=${this.props.category}&apikey=f76f3974a8d6e319c4a9c58c6f0eed60&page=${this.state.page}&max=${this.props.pageSize}`;
     let data = await fetch(url)
     let parse = await (data.json())
     console.log(parse)
     this.setState({
-      articles: this.state.articles.concat(parse.articles),
-      totalResults: parse.totalResults,
+      articles: this.state.articles.concat(parse.articles || []),
+      totalResults: parse.totalArticles || parse.totalResults || 0,
       loading: false
     })
   }
@@ -100,7 +100,7 @@ export class News extends Component {
                     <NewsItem
                       title={ele.title ? ele.title : ""}
                       description={ele.description ? ele.description : ""}
-                      imageUrl={ele.urlToImage}
+                      imageUrl={ele.image || ele.urlToImage}
                       newsUrl={ele.url}
                       author={ele.author}
                       date={ele.publishedAt}
