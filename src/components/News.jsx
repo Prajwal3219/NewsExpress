@@ -35,7 +35,7 @@ export class News extends Component {
       
     this.props.setProgress(10)
     this.setState({ loading: true });
-    const url = `/api/gnews?country=${this.props.country}&category=${this.props.category}&apikey=f76f3974a8d6e319c4a9c58c6f0eed60&page=${this.state.page}&max=${this.props.pageSize}`;
+    const url = `/api/gnews?country=${this.props.country}&category=${this.props.category}&apikey=${import.meta.env.VITE_API_KEY}&page=${this.state.page}&max=${this.props.pageSize}`;
     let data = await fetch(url)
     this.props.setProgress(30)
     let parse = await (data.json())
@@ -71,7 +71,7 @@ export class News extends Component {
 
   fetchMoreData = async() =>{
     this.setState({ loading: true, page: this.state.page + 1 });
-    const url = `/api/gnews?country=${this.props.country}&category=${this.props.category}&apikey=f76f3974a8d6e319c4a9c58c6f0eed60&page=${this.state.page}&max=${this.props.pageSize}`;
+    const url = `/api/gnews?country=${this.props.country}&category=${this.props.category}&apikey=${import.meta.env.VITE_API_KEY}&page=${this.state.page}&max=${this.props.pageSize}`;
     let data = await fetch(url)
     let parse = await (data.json())
     console.log(parse)
