@@ -27,7 +27,7 @@ export default class App extends Component {
           />
           <Routes>
             <Route path="/" element={<News setProgress={this.setProgress} key="general" pageSize={5} category="general" />} />
-            <Route path="/sport" element={<News setProgress={this.setProgress} key="sport" pageSize={5} category="sport" />} />
+            <Route path="/sport" element={<News setProgress={this.setProgress} key="sport" pageSize={5} category="sports" />} />
             <Route path="/tech" element={<News setProgress={this.setProgress} key="science" pageSize={5} category="science" />} />
             <Route path="/entertainment" element={<News setProgress={this.setProgress} key="entertainment" pageSize={5} category="entertainment" />} />
             <Route path="/business" element={<News setProgress={this.setProgress} key="business" pageSize={5} category="business" />} />
